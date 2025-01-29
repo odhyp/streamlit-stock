@@ -6,7 +6,7 @@ By: Odhy Pradhana (odhyp.com) - MIT LICENSE
 
 import streamlit as st
 
-from src.data_scraper import sample
+from src.data_scraper import scrape_yahoo_finance
 
 
 class StreamlitApp:
@@ -117,7 +117,42 @@ class StreamlitApp:
         """
         st.title("📖 Stock Overview")
 
-        ticker = st.text_input("IDX Ticker (e.g. BBCA)")
+        a1, a2 = st.columns(2)
+        a1.write(
+            "This page provides a bird’s-eye view of an IDX-listed company, displaying key details such as its name, description, sector, industry, and essential financial information"
+        )
+
+        ticker = st.text_input(
+            "Enter IDX stock:", placeholder="e.g. BBCA or ADRO", max_chars=4
+        ).upper()
+
+        if ticker:
+            stock_data = scrape_yahoo_finance(ticker)
+
+            if stock_data:
+                col1, col2 = st.columns([5, 2], gap="large")
+
+                # Company name
+                col1.subheader("Name:")
+                col1.write(stock_data["name"])
+
+                # Company desc
+                col1.subheader("Description:")
+                col1.write(stock_data["description"])
+
+                # Company sector
+                col2.subheader("Sector:")
+                col2.write(stock_data["sector"])
+
+                # Company industry
+                col2.subheader("Industry:")
+                col2.write(stock_data["industry"])
+            else:
+                st.error(
+                    "Failed to retrieve stock data. Please check the ticker and try again."
+                )
+        else:
+            st.info("Please enter a stock ticker to fetch data!")
 
     def page_fundamental(self):
         """
