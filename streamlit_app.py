@@ -67,20 +67,45 @@ class StreamlitApp:
 
     def render_page(self):
         if st.session_state.page == "Introduction":
-            st.title("👋 Welcome!")
-            st.write("This is the welcome page of this project")
+            self.page_introduction()
 
         elif st.session_state.page == "Overview":
-            st.title("📖 Stock Overview")
-            st.info("Coming soon!")
+            self.page_overview()
 
         elif st.session_state.page == "Fundamental":
-            st.title("📊 Fundamental Analysis")
-            st.info("Coming soon!")
+            self.page_fundamental()
 
         elif st.session_state.page == "Technical":
-            st.title("📈 Technical Analysis")
-            st.info("Coming soon!")
+            self.page_technical()
+
+    def page_introduction(self):
+        """
+        Displays the Introduction page.
+        """
+        st.title("👋 Welcome!")
+        st.write("This is the welcome page of this project")
+
+    def page_overview(self):
+        """
+        Displays the Overview page.
+        """
+        st.title("📖 Stock Overview")
+
+        ticker = st.text_input("IDX Ticker (e.g. BBCA)")
+
+    def page_fundamental(self):
+        """
+        Displays the Fundamental Analysis page.
+        """
+        st.title("📊 Fundamental Analysis")
+        st.info("Coming soon!")
+
+    def page_technical(self):
+        """
+        Displays the Technical Analysis page.
+        """
+        st.title("📈 Technical Analysis")
+        st.info("Coming soon!")
 
     def run(self):
         self.sidebar_navigation()
