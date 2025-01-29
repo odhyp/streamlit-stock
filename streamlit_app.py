@@ -53,7 +53,9 @@ class StreamlitApp:
         Creates the sidebar navigation menu with buttons for different pages.
         """
         st.sidebar.header("IDX Stock Analysis")
-        st.sidebar.caption("Welcome to my Streamlit project!")
+        st.sidebar.caption(
+            "🚀 A lightweight stock analysis app that scrapes and evaluates IDX stock financial data for better investment plan."
+        )
 
         st.sidebar.divider()
         st.sidebar.subheader("Menu")
