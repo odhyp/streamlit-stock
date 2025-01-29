@@ -1,5 +1,7 @@
 """
-A Streamlit app
+A Streamlit app for IDX Stock Analysis
+Built using Streamlit, requests, and BeautifulSoup
+By: Odhy Pradhana (odhyp.com) - MIT LICENSE
 """
 
 import streamlit as st
@@ -8,11 +10,30 @@ from src.data_scraper import sample
 
 
 class StreamlitApp:
+    """
+    A class-based Streamlit application for IDX Stock Analysis.
+
+    This app includes four main pages:
+    1. Introduction
+    2. Overview
+    3. Fundamental Analysis
+    4. Technical Analysis
+
+    The app fetches stock data using `requests` and `BeautifulSoup` and displays
+    the analysis interactively.
+    """
+
     def __init__(self):
+        """
+        Initializes the Streamlit application by setting up the page and session state.
+        """
         self.setup_page()
         self.initialize_session_state()
 
     def setup_page(self):
+        """
+        Configures the Streamlit page settings, including title, icon, and layout.
+        """
         st.set_page_config(
             page_title="IDX Stock Analysis by Odai",
             page_icon="😎",
@@ -21,10 +42,16 @@ class StreamlitApp:
         )
 
     def initialize_session_state(self):
+        """
+        Initializes session state variables to maintain the selected page across reruns.
+        """
         if "page" not in st.session_state:
             st.session_state.page = "Introduction"
 
     def sidebar_navigation(self):
+        """
+        Creates the sidebar navigation menu with buttons for different pages.
+        """
         st.sidebar.header("IDX Stock Analysis")
         st.sidebar.caption("Welcome to my Streamlit project!")
 
@@ -62,6 +89,9 @@ class StreamlitApp:
         st.sidebar.caption("&copy; 2025 Odhy Pradhana. All Rights Reserved.")
 
     def render_page(self):
+        """
+        Renders the selected page content dynamically based on session state.
+        """
         if st.session_state.page == "Introduction":
             self.page_introduction()
 
@@ -104,6 +134,9 @@ class StreamlitApp:
         st.info("Coming soon!")
 
     def run(self):
+        """
+        Runs the Streamlit application by handling navigation and rendering pages.
+        """
         self.sidebar_navigation()
         self.render_page()
 
