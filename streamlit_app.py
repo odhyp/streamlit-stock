@@ -3,12 +3,8 @@ A Streamlit app
 """
 
 import streamlit as st
-import requests
-from bs4 import BeautifulSoup
-import pandas as pd
 
-
-import streamlit as st
+from src.data_scraper import sample
 
 
 class StreamlitApp:
