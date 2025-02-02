@@ -15,3 +15,7 @@ class PathManager:
     @staticmethod
     def file_exists(filename: str) -> bool:
         return (PathManager.get_data_path() / filename).exists()
+
+    @staticmethod
+    def get_file_path(filename: str) -> Path:
+        return PathManager.get_data_path() / filename
