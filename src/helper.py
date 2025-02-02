@@ -8,6 +8,6 @@ def update_daftar_saham():
     json_path = pm.get_file_path("daftar_saham.json")
 
     with IDXBot() as bot:
-        bot.download_daftar_saham(file_name=excel_path)
+        bot.download_daftar_saham(output_name=excel_path)
 
     convert_daftar_saham(input_file=excel_path, output_file=json_path)

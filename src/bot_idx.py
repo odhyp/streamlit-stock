@@ -27,7 +27,7 @@ class IDXBot:
         if self.playwright:
             self.playwright.stop()
 
-    def download_daftar_saham(self, file_name: str):
+    def download_daftar_saham(self, output_name: str):
         """
         Download Daftar Saham (excel)
         https://www.idx.co.id/id/data-pasar/data-saham/daftar-saham/
@@ -44,4 +44,4 @@ class IDXBot:
             btn_download.click()
 
         download_file = download_info.value
-        download_file.save_as(file_name)
+        download_file.save_as(output_name)
