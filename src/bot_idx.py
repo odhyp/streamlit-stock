@@ -88,5 +88,7 @@ class IDXBot:
                     btn_download.wait_for()
                     btn_download.click()
 
+                file_name = f"{date}.xlsx"
                 download_file = download_info.value
+                download_file.save_as(f"{output_dir}/{file_name}")
                 self.logger.info("Downloaded file: %s", file_name)
