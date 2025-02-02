@@ -19,3 +19,9 @@ class PathManager:
     @staticmethod
     def get_file_path(filename: str) -> Path:
         return PathManager.get_data_path() / filename
+
+    @staticmethod
+    def get_output_path(dir_name: str) -> Path:
+        return PathManager.get_data_path() / dir_name
+
+
