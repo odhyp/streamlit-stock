@@ -1,4 +1,5 @@
 import time
+import logging
 
 from playwright.sync_api import sync_playwright
 
@@ -9,6 +10,8 @@ class IDXBot:
         self.context = None
         self.page = None
         self.playwright = None
+        self.logger = logging.getLogger(self.__class__.__name__)
+        self.logger.info("%s initialized", __class__.__name__)
 
     def __enter__(self):
         self.playwright = sync_playwright().start()
@@ -17,6 +20,7 @@ class IDXBot:
         )
         self.context = self.browser.new_context(no_viewport=True)
         self.page = self.context.new_page()
+        self.logger.debug("Created new page")
         return self
 
     def __exit__(self, exc_type, exc_value, traceback):
@@ -26,6 +30,7 @@ class IDXBot:
             self.browser.close()
         if self.playwright:
             self.playwright.stop()
+        self.logger.info("%s closed", __class__.__name__)
 
     def download_daftar_saham(self, output_name: str):
         """
@@ -37,6 +42,7 @@ class IDXBot:
         """
         url = "https://www.idx.co.id/id/data-pasar/data-saham/daftar-saham/"
         self.page.goto(url, timeout=30_000)
+        self.logger.debug("Go to page: %s", url)
 
         with self.page.expect_download(timeout=30_000) as download_info:
             btn_download = self.page.locator('button:has-text("Unduh")')
@@ -45,6 +51,7 @@ class IDXBot:
 
         download_file = download_info.value
         download_file.save_as(output_name)
+        self.logger.info("Downloaded file: %s", output_name)
 
     def download_ringkasan_saham(self, output_dir: str, date_range: list):
         """
@@ -58,6 +65,7 @@ class IDXBot:
             "https://www.idx.co.id/id/data-pasar/ringkasan-perdagangan/ringkasan-saham/"
         )
         self.page.goto(url, timeout=30_000)
+        self.logger.debug("Go to page: %s", url)
 
         for date in date_range:
             # Date form
@@ -81,4 +89,4 @@ class IDXBot:
                     btn_download.click()
 
                 download_file = download_info.value
-                download_file.save_as(f"{output_dir}/{date}.xlsx")
+                self.logger.info("Downloaded file: %s", file_name)

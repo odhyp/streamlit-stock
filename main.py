@@ -1,9 +1,17 @@
+import logging
+
 from src.data_reader import read_json
 from src.helper import update_daftar_saham, ringkasan_saham
 
 
 def main():
-    # update_daftar_saham()
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        handlers=[logging.FileHandler("logs/app.log"), logging.StreamHandler()],
+    )
+
+    update_daftar_saham()
     ringkasan_saham()
 
 
