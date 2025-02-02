@@ -45,3 +45,40 @@ class IDXBot:
 
         download_file = download_info.value
         download_file.save_as(output_name)
+
+    def download_ringkasan_saham(self, output_dir: str, date_range: list):
+        """
+        Download Ringkasan Saham (excel)
+        https://www.idx.co.id/id/data-pasar/ringkasan-perdagangan/ringkasan-saham/
+
+        TODO: url var is hard-coded
+        TODO: make a universal timeout values (e.g. short, long, etc)
+        """
+        url = (
+            "https://www.idx.co.id/id/data-pasar/ringkasan-perdagangan/ringkasan-saham/"
+        )
+        self.page.goto(url, timeout=30_000)
+
+        for date in date_range:
+            # Date form
+            form_date = self.page.locator("input[name='date']")
+            form_date.wait_for()
+            form_date.click()
+            form_date.clear()
+            form_date.type(date)
+            form_date.press("Enter")
+
+            # Data table
+            stock_table = self.page.locator("#vgt-table")
+            stock_table.wait_for()
+
+            # Download button
+            btn_download = self.page.locator('button:has-text("Unduh")')
+
+            if not btn_download.is_disabled():
+                with self.page.expect_download(timeout=30_000) as download_info:
+                    btn_download.wait_for()
+                    btn_download.click()
+
+                download_file = download_info.value
+                download_file.save_as(f"{output_dir}/{date}.xlsx")
